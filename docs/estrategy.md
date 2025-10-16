@@ -1,225 +1,272 @@
-# **Metodologías de Trabajo - Proyecto Pilot AI Drill**
+# **Work Methodologies Document - Pilot AI Drill Project**
 
-Fase 0: Definición de Estrategia Técnica
+Phase 0: Technical Strategy Definition
 
-## **1. Resumen Ejecutivo**
+## **1. Executive Summary**
 
-El proyecto **Pilot AI Drill** tiene como objetivo desarrollar un sistema de predicción de Rate of Penetration (ROP) mediante técnicas de Machine Learning aplicadas a datos de perforación geotérmica. Este documento establece las metodologías de trabajo que guiarán el desarrollo técnico, asegurando un balance óptimo entre control, reproducibilidad y eficiencia.
+The **Pilot AI Drill** project aims to develop a Rate of Penetration (ROP) prediction system using Machine Learning techniques applied to geothermal drilling data. This document establishes the working methodologies that will guide technical development, ensuring an optimal balance between control, reproducibility, and efficiency while following standard ML lifecycle phases.
 
-## **2. Metodologías de Implementación**
+## **2. Implementation Methodologies**
 
-### **2.1. Metodología Tradicional (Code-First)**
+### **2.1. Traditional Methodology (Code-First)**
 
-**Objetivo:** Máximo control y transparencia en el procesamiento de datos de dominio específico.
+**Objective:** Maximum control and transparency in domain-specific data processing.
 
-**Stack Tecnológico:**
+**Technology Stack:**
 
-- **Procesamiento de datos LAS:** `welly`, `lasio`
-- **Manipulación de datos:** `pandas`, `numpy`
-- **Visualización:** `matplotlib`, `seaborn`, `plotly`
+- **LAS data processing:** `welly`, `lasio`
+- **Data manipulation:** `pandas`, `numpy`
+- **Visualization:** `matplotlib`, `seaborn`, `plotly`
 - **Machine Learning:** `scikit-learn`, `xgboost`, `lightgbm`
-- **Tracking de experimentos:** `MLflow` manual o personalizado
+- **Experiment tracking:** Manual `MLflow` or custom implementation
 
-**Casos de Uso Prioritarios:**
+**Primary Use Cases:**
 
-- Carga y validación inicial de archivos .LAS
-- Transformaciones específicas del dominio petrolero
-- Ingeniería de características basada en conocimiento experto
-- Desarrollo de algoritmos personalizados
+- Initial loading and validation of .LAS files
+- Petroleum domain-specific transformations
+- Feature engineering based on expert knowledge
+- Custom algorithm development
 
-### **2.2. Metodología ADS SDK (Oracle Accelerated Data Science)**
+### **2.2. ADS SDK Methodology (Oracle Accelerated Data Science)**
 
-**Objetivo:** Automatización y aceleración del flujo de trabajo de ML nativo en OCI.
+**Objective:** Automation and acceleration of ML workflow native to OCI.
 
-**Componentes Clave del ADS SDK:**
+**Key ADS SDK Components:**
 
-- **`DatasetFactory`:** Carga unificada de datos desde múltiples fuentes
-- **`suggest_recommendations()`:** Diagnóstico automatizado de calidad de datos
-- **`auto_transform()`:** Preprocesamiento y limpieza automática
-- **`show_in_notebook()`:** EDA automatizado con visualizaciones integradas
-- **`OracleAutoMLProvider`:** Entrenamiento y optimización automática de modelos
-- **`ADSModel`:** Gestión unificada de modelos y metadata
-- **`ModelCatalog`:** Versionado y registro automático en OCI
+- **`DatasetFactory`:** Unified data loading from multiple sources
+- **`suggest_recommendations()`:** Automated data quality diagnosis
+- **`auto_transform()`:** Automated preprocessing and cleaning
+- **`show_in_notebook()`:** Automated EDA with integrated visualizations
+- **`OracleAutoMLProvider`:** Automated model training and optimization
+- **`ADSModel`:** Unified model and metadata management
+- **`ModelCatalog`:** Automated versioning and registration in OCI
 
-**Casos de Uso Prioritarios:**
+**Primary Use Cases:**
 
-- Limpieza automática de problemas genéricos en datos
-- Análisis exploratorio rápido y estandarizado
-- Baseline automático de modelos mediante AutoML
-- Despliegue nativo en OCI Data Science
-- MLOps y monitoreo automatizado
+- Automated cleaning of generic data problems
+- Rapid standardized exploratory analysis
+- Automated model baselining via AutoML
+- Simplified deployment to OCI Data Science
+- Automated MLOps and monitoring
 
-### **2.3. Metodología Híbrida (Recomendada)**
+### **2.3. Hybrid Methodology (Recommended)**
 
-**Objetivo:** Combinar las fortalezas de ambos enfoques manteniendo flexibilidad estratégica.
+**Objective:** Combine strengths of both approaches while maintaining strategic flexibility.
 
-**Flujo de Trabajo Integrado:**
+**Integrated Workflow:**
 
 ```yml
-Datos .LAS → welly (Dominio) → DataFrame limpio → ADS SDK (ML) → Modelos
+LAS Data → welly (Domain) → Cleaned DataFrame → ADS SDK (ML) → Models
 ```
 
-**Puntos de Integración Clave:**
+**Key Integration Points:**
 
-1. **Transformación de datos específicos** con herramientas tradicionales
-2. **Conversión a DataFrame** como interfaz entre metodologías
-3. **Limpieza y EDA automatizado** con ADS SDK
-4. **Experimentación dual** (manual + AutoML)
-5. **Selección y validación** con métricas unificadas
+1. **Domain-specific data transformation** with traditional tools
+2. **DataFrame conversion** as interface between methodologies
+3. **Automated cleaning and EDA** with ADS SDK
+4. **Dual experimentation** (manual + AutoML)
+5. **Unified metric selection and validation**
 
-## **3. Estructura de Proyecto para Notebooks**
+## **3. Project Structure Aligned with ML Lifecycle**
 
 ```yml
-pilot-ai-drill/
+Pilot_AI_Drill/
 │
-├── 00_docs/                  # Documentación del proyecto
+├── 00_documentation/                 # Project documentation
 │   ├── project_charter.md
-│   ├── methodology_document.md       # Este documento
+│   ├── methodology_document.md      # This document
 │   └── technical_decisions_log.md
 │
 ├── 01_data/
-│   ├── raw/                          # Datos originales .LAS (gitignored)
+│   ├── raw/                         # Original .LAS data (gitignored)
 │   │   ├── well_16-16B/
 │   │   └── external_sources/
-│   ├── processed/                    # Datos intermedios procesados
+│   ├── processed/                   # Intermediate processed data
 │   │   ├── domain_cleaned/
 │   │   └── ads_transformed/
-│   └── final/                        # Datos listos para modelado
+│   └── final/                       # Modeling-ready data
 │
-├── 02_notebooks/
-│   ├── 01_data_loading_welly.ipynb   # Metodología tradicional
-│   ├── 02_domain_transformations.ipynb
-│   ├── 03_ads_automated_cleaning.ipynb # Metodología ADS SDK
-│   ├── 04_automl_baseline.ipynb
-│   ├── 05_manual_model_development.ipynb # Metodología híbrida
-│   ├── 06_model_comparison.ipynb
-│   └── 07_final_pipeline.ipynb
+├── 02_data_processing/              # ML Lifecycle: Data Processing
+│   ├── notebooks/
+│   │   ├── 01_data_loading_welly.ipynb        # Traditional methodology
+│   │   ├── 02_domain_specific_cleaning.ipynb  # Domain wrangling
+│   │   └── 03_ads_automated_cleaning.ipynb    # ADS SDK methodology
+│   └── src/
+│       ├── las_loader.py
+│       ├── data_quality_checks.py
+│       └── domain_transformations.py
 │
-├── 03_src/
-│   ├── domain_processing/            # Código metodología tradicional
-│   │   ├── las_loader.py
-│   │   ├── geophysical_transforms.py
-│   │   └── quality_checks.py
-│   ├── ads_workflows/               # Código metodología ADS SDK
-│   │   ├── auto_cleaner.py
-│   │   ├── automl_runner.py
-│   │   └── model_deployer.py
-│   └── hybrid_integration/          # Código metodología híbrida
-│       ├── workflow_orchestrator.py
-│       └── result_comparator.py
+├── 03_eda/                          # ML Lifecycle: Exploratory Data Analysis
+│   ├── notebooks/
+│   │   ├── 04_traditional_eda.ipynb           # Manual EDA
+│   │   └── 05_ads_automated_eda.ipynb         # ADS show_in_notebook()
+│   └── src/
+│       ├── visualization_utils.py
+│       └── statistical_analysis.py
 │
-├── 04_models/
-│   ├── traditional/                 # Modelos enfoque tradicional
-│   ├── automl/                      # Modelos AutoML
-│   └── hybrid/                      # Modelos finales híbridos
+├── 04_feature_engineering/          # ML Lifecycle: Feature Engineering
+│   ├── notebooks/
+│   │   ├── 06_domain_feature_engineering.ipynb # Traditional
+│   │   └── 07_ads_feature_selection.ipynb      # ADS automated
+│   └── src/
+│       ├── feature_creation.py
+│       └── feature_selection.py
 │
-├── 05_experiments/
-│   ├── traditional_runs/            # Resultados experimentos tradicionales
-│   ├── automl_runs/                 # Resultados AutoML
-│   └── comparison_reports/          # Análisis comparativos
+├── 05_modeling/                     # ML Lifecycle: Modeling & Evaluation
+│   ├── notebooks/
+│   │   ├── 08_automl_baseline.ipynb           # ADS SDK methodology
+│   │   ├── 09_manual_model_development.ipynb  # Traditional methodology
+│   │   ├── 10_hybrid_approach.ipynb           # Hybrid methodology
+│   │   └── 11_model_comparison_evaluation.ipynb
+│   └── src/
+│       ├── model_training.py
+│       ├── hyperparameter_tuning.py
+│       └── model_evaluation.py
 │
-├── 06_config/
-│   ├── domain_params.yaml           # Parámetros dominio específico
-│   ├── ads_config.yaml              # Configuración ADS SDK
-│   └── project_settings.yaml        # Configuración general proyecto
+├── 06_deployment/                   # ML Lifecycle: Deployment Prep
+│   ├── notebooks/
+│   │   └── 12_final_pipeline.ipynb            # All methodologies
+│   └── src/
+│       ├── pipeline_creation.py
+│       └── model_packaging.py
 │
-├── 07_utils/
+├── 07_models/
+│   ├── traditional/                 # Traditional approach models
+│   ├── automl/                      # AutoML models
+│   └── hybrid/                      # Final hybrid models
+│
+├── 08_experiments/
+│   ├── traditional_runs/            # Traditional experiment results
+│   ├── automl_runs/                 # AutoML results
+│   └── comparison_reports/          # Comparative analysis
+│
+├── 09_config/
+│   ├── domain_params.yaml           # Domain-specific parameters
+│   ├── ads_config.yaml              # ADS SDK configuration
+│   └── project_settings.yaml        # General project settings
+│
+├── 10_utils/
 │   ├── logging_config.py
 │   ├── data_validators.py
 │   └── visualization_helpers.py
 │
-├── requirements.txt                 # Dependencias tradicionales
-├── ads_requirements.txt            # Dependencias específicas ADS
-├── environment.yml                 # Entorno Conda unificado
+├── requirements.txt                 # Traditional dependencies
+├── ads_requirements.txt            # ADS-specific dependencies
+├── environment.yml                 # Unified Conda environment
 └── README.md
 ```
 
-## **4. Flujo de Trabajo por Metodología**
+## **4. Methodology Workflow by ML Phase**
 
-### **4.1. Metodología Tradicional**
+### **4.1. Data Processing Phase**
 
 ```python
-# notebooks/01_data_loading_welly.ipynb
-from src.domain_processing.las_loader import WellDataLoader
-from src.domain_processing.geophysical_transforms import apply_domain_corrections
+# 02_data_processing/notebooks/01_data_loading_welly.ipynb
+from src.las_loader import WellDataLoader
+from src.domain_transformations import apply_domain_corrections
 
-# Carga específica de dominio
+# Domain-specific loading
 loader = WellDataLoader("data/raw/well_16-16B/")
 well_data = loader.load_las_files()
 
-# Transformaciones manuales basadas en conocimiento experto
-corrected_data = apply_domain_corrections(well_data)
+# Manual data wrangling and cleaning
+cleaned_data = apply_domain_corrections(well_data)
 ```
 
-### **4.2. Metodología ADS SDK**
+### **4.2. EDA Phase**
 
 ```python
-# notebooks/03_ads_automated_cleaning.ipynb
+# 03_eda/notebooks/05_ads_automated_eda.ipynb
 from ads.dataset.factory import DatasetFactory
-from ads.automl.provider import OracleAutoMLProvider
 
-# Carga desde datos ya procesados del dominio
+# Load from domain-processed data
 ds = DatasetFactory.open("data/processed/domain_cleaned/well_data.csv")
 
-# Automatización de limpieza y EDA
-ds.suggest_recommendations()
-ds.auto_transform()
-ds.show_in_notebook()
-
-# AutoML para baseline
-automl = OracleAutoMLProvider(ds)
-baseline_model = automl.train()
+# Automated exploratory analysis
+ds.show_in_notebook()  # Comprehensive EDA with visualizations
 ```
 
-### **4.3. Metodología Híbrida**
+### **4.3. Feature Engineering Phase**
 
 ```python
-# notebooks/05_manual_model_development.ipynb
+# 04_feature_engineering/notebooks/07_ads_feature_selection.ipynb
+from ads.feature_engineering import FeatureEngineer
+
+# Automated feature engineering and selection
+engineer = FeatureEngineer(ds)
+engineered_ds = engineer.auto_transform()
+
+# Compare with domain-engineered features
+domain_features = load_domain_features("04_feature_engineering/processed/")
+```
+
+### **4.4. Modeling & Evaluation Phase**
+
+```python
+# 05_modeling/notebooks/10_hybrid_approach.ipynb
 from src.hybrid_integration.workflow_orchestrator import HybridWorkflow
 
-# Orquestación inteligente
+# Orchestrated comparison
 workflow = HybridWorkflow(
-    traditional_config="config/domain_params.yaml",
-    ads_config="config/ads_config.yaml"
+    traditional_config="09_config/domain_params.yaml",
+    ads_config="09_config/ads_config.yaml"
 )
 
-# Ejecución paralela de ambos enfoques
+# Parallel execution
 traditional_results = workflow.run_traditional_pipeline()
 automl_results = workflow.run_ads_automl_pipeline()
 
-# Comparación y selección
+# Comprehensive evaluation
 best_model = workflow.select_best_model(
     traditional_results, 
     automl_results
 )
 ```
 
-## **5. Criterios de Éxito por Metodología**
+### **4.5. Deployment Preparation Phase**
 
-### **Metodología Tradicional:**
+```python
+# 06_deployment/notebooks/12_final_pipeline.ipynb
+from ads.model import ADSModel
+from src.model_packaging import create_production_pipeline
 
-- ✅ Control total sobre transformaciones de dominio
-- ✅ Transparencia completa en preprocesamiento
-- ✅ Portabilidad entre diferentes entornos
-- ✅ Flexibilidad para algoritmos personalizados
+# Package best model from hybrid approach
+production_pipeline = create_production_pipeline(best_model)
 
-### **Metodología ADS SDK:**
+# Register in OCI Model Catalog
+ads_model = ADSModel.from_estimator(
+    production_pipeline, 
+    artifact_dir="07_models/hybrid/final/"
+)
+ads_model.save()
+```
 
-- ✅ Time-to-model reducido en ≥60%
-- ✅ Implementación de best practices automatizadas
-- ✅ Despliegue en OCI simplificado
-- ✅ Documentación automática de experimentos
+## **5. Success Criteria by Methodology**
 
-### **Metodología Híbrida:**
+### **Traditional Methodology:**
 
-- ✅ Balance óptimo entre control y velocidad
-- ✅ Mitigación de vendor lock-in
-- ✅ Validación cruzada de resultados
-- ✅ Mantenibilidad a largo plazo
+- ✅ Complete control over domain transformations
+- ✅ Full transparency in preprocessing
+- ✅ Portability across different environments
+- ✅ Flexibility for custom algorithms
 
-## **6. Gestión de Dependencias y Entornos**
+### **ADS SDK Methodology:**
 
-### **6.1. Entorno Unificado**
+- ✅ Reduced time-to-model by ≥60%
+- ✅ Automated implementation of best practices
+- ✅ Simplified OCI deployment
+- ✅ Automated experiment documentation
+
+### **Hybrid Methodology:**
+
+- ✅ Optimal balance between control and speed
+- ✅ Vendor lock-in mitigation
+- ✅ Cross-validation of results
+- ✅ Long-term maintainability
+
+## **6. Dependencies and Environment Management**
+
+### **6.1. Unified Environment**
 
 ```yaml
 # environment.yml
@@ -228,7 +275,7 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  # Dependencias tradicionales
+  # Traditional dependencies
   - python=3.9
   - pandas>=1.5
   - numpy>=1.21
@@ -237,24 +284,24 @@ dependencies:
   - welly>=0.5
   - lasio>=0.30
   
-  # Dependencias ADS
+  # ADS dependencies
   - oracle-ads>=2.8
   - oci>=2.10
   
-  # Visualización
+  # Visualization
   - matplotlib>=3.5
   - seaborn>=0.11
   - plotly>=5.10
 ```
 
-### **6.2. Configuración ADS SDK**
+### **6.2. ADS SDK Configuration**
 
 ```yaml
-# config/ads_config.yaml
+# 09_config/ads_config.yaml
 ads_config:
   log_level: INFO
   execution:
-    use_conda: True
+    use_conda: true
     conda_pack: "pilot_ai_drill"
   
   automl:
@@ -262,7 +309,7 @@ ads_config:
     algorithms:
       - xgboost
       - random_forest
-      - logistic_regression
+      - gradient_boosting
     metric: "rmse"
   
   deployment:
@@ -271,18 +318,18 @@ ads_config:
       bandwidth: 10
 ```
 
-## **7. Estrategia de Versionado y Reproducibilidad**
+## **7. Versioning and Reproducibility Strategy**
 
-### **7.1. Control de Versiones**
+### **7.1. Version Control**
 
-- **Datos:** DVC para datos procesados y modelos
-- **Código:** Git con convención de commits semántica
-- **Experimentos:** MLflow para tracking de corridas
-- **Modelos:** Model Catalog de OCI para versionado
+- **Data:** DVC for processed data and models
+- **Code:** Git with semantic commit convention
+- **Experiments:** MLflow for run tracking
+- **Models:** OCI Model Catalog for versioning
 
-### **7.2. Reproducibilidad**
+### **7.2. Reproducibility**
 
-- Semillas aleatorias configuradas en `config/project_settings.yaml`
-- Snapshots de datos en cada fase de procesamiento
-- Metadata completa de transformaciones aplicadas
-- Environment containers versionados
+- Random seeds configured in `09_config/project_settings.yaml`
+- Data snapshots at each processing phase
+- Complete metadata of applied transformations
+- Versioned environment containers

@@ -1,0 +1,87 @@
+{
+  "source_file": "../data/raw/Utah_Forge_16B(78)-32_6_19a.las",
+  "processing_date": "2025-12-03 16:30:45",
+  "notebook": "01_data_loading.ipynb",
+  "total_rows": 10857,
+  "total_columns": 21,
+  "depth_range_ft": {
+    "min": 90.0,
+    "max": 10946.0
+  },
+  "null_value_convention": -999.25,
+  "target_variable": "rop_ft_hr",
+  "feature_groups": {
+    "operational": [
+      "WOBI",
+      "TQI",
+      "RPMI",
+      "ROPA",
+      "MTIA",
+      "MTOA"
+    ],
+    "geological": [
+      "ANH",
+      "CAL",
+      "CHL",
+      "EPI",
+      "HEM",
+      "PYR",
+      "QTZ",
+      "SER",
+      "SIL",
+      "LPT"
+    ],
+    "environmental": [
+      "AH2S1",
+      "AH2S2",
+      "AH2S3",
+      "AH2S4"
+    ]
+  },
+  "columns": [
+    "depth_ft",
+    "weight_on_bit_klb",
+    "torque_ftlb",
+    "rpm",
+    "rop_ft_hr",
+    "mud_temp_in_f",
+    "mud_temp_out_f",
+    "anhydrite_pct",
+    "calcite_pct",
+    "chlorite_pct",
+    "epidote_pct",
+    "hematite_pct",
+    "pyrite_pct",
+    "quartz_pct",
+    "sericite_pct",
+    "sill_pct",
+    "lithology_pct",
+    "h2s_shakers_ppm",
+    "h2s_rig_floor_ppm",
+    "h2s_cellar_ppm",
+    "h2s_pits_ppm"
+  ],
+  "missing_values": {
+    "depth_ft": 0,
+    "weight_on_bit_klb": 816,
+    "torque_ftlb": 1599,
+    "rpm": 816,
+    "rop_ft_hr": 816,
+    "mud_temp_in_f": 0,
+    "mud_temp_out_f": 0,
+    "anhydrite_pct": 10302,
+    "calcite_pct": 8017,
+    "chlorite_pct": 9453,
+    "epidote_pct": 9794,
+    "hematite_pct": 9166,
+    "pyrite_pct": 10848,
+    "quartz_pct": 1821,
+    "sericite_pct": 10829,
+    "sill_pct": 10857,
+    "lithology_pct": 0,
+    "h2s_shakers_ppm": 0,
+    "h2s_rig_floor_ppm": 0,
+    "h2s_cellar_ppm": 0,
+    "h2s_pits_ppm": 0
+  }
+}

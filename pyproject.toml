@@ -3,10 +3,12 @@ name = "pilot-ai-drill"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.10"
 dependencies = [
-    "ipykernel>=7.0.1",
-    "pandas>=2.3.3",
-    "setuptools>=80.9.0",
+    "ipykernel>=7.1.0",
+    "optuna>=4.6.0",
+    "oracle-ads[boosted,data,geo,notebook,notebooks,opctl,text,viz]>=2.14.3",
+    "plotly>=6.5.0",
+    "statsmodels>=0.14.5",
     "welly>=0.5.2",
 ]

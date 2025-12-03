@@ -1,0 +1,118 @@
+{
+  "timestamp": "2025-12-03T17:04:44.753798",
+  "input_file": "../data/processed/well_data_clean.csv",
+  "original_shape": [
+    10857,
+    21
+  ],
+  "actions": [
+    {
+      "action": "remove_constant_features",
+      "features_removed": [
+        "mud_temp_out_f",
+        "pyrite_pct",
+        "sericite_pct",
+        "sill_pct",
+        "lithology_pct",
+        "h2s_cellar_ppm"
+      ],
+      "reason": "No variability, no information"
+    },
+    {
+      "action": "remove_unreliable_feature",
+      "feature": "mud_temp_in_f",
+      "reason": "Unrealistic values (mean=13.64\u00b0F)",
+      "expected_range": "60-150\u00b0F for drilling mud"
+    },
+    {
+      "action": "impute_by_depth",
+      "feature": "quartz_pct",
+      "method": "median_by_depth_bin",
+      "bin_size": "500 ft",
+      "values_imputed": 1821
+    },
+    {
+      "action": "impute_by_depth",
+      "feature": "chlorite_pct",
+      "method": "median_by_depth_bin",
+      "bin_size": "500 ft",
+      "values_imputed": 9453
+    },
+    {
+      "action": "impute_with_zero",
+      "features": [
+        "anhydrite_pct",
+        "calcite_pct",
+        "epidote_pct",
+        "hematite_pct"
+      ],
+      "method": "fill_with_0",
+      "reason": "Assume absence of mineral",
+      "total_values_imputed": 37279
+    },
+    {
+      "action": "impute_operational",
+      "feature": "weight_on_bit_klb",
+      "method": "forward_backward_fill",
+      "values_imputed": 816
+    },
+    {
+      "action": "impute_operational",
+      "feature": "torque_ftlb",
+      "method": "forward_backward_fill",
+      "values_imputed": 1599
+    },
+    {
+      "action": "impute_operational",
+      "feature": "rpm",
+      "method": "forward_backward_fill",
+      "values_imputed": 816
+    },
+    {
+      "action": "flag_outliers",
+      "method": "IQR (1.5 * IQR)",
+      "features_checked": [
+        "rop_ft_hr",
+        "weight_on_bit_klb",
+        "torque_ftlb",
+        "rpm"
+      ],
+      "outlier_flags_created": [
+        "rop_ft_hr_outlier",
+        "weight_on_bit_klb_outlier",
+        "torque_ftlb_outlier",
+        "rpm_outlier",
+        "is_outlier_any"
+      ],
+      "rows_with_outliers": 677,
+      "pct_rows_with_outliers": 6.235608363267938
+    }
+  ],
+  "final_shape": [
+    10857,
+    19
+  ],
+  "final_columns": [
+    "depth_ft",
+    "weight_on_bit_klb",
+    "torque_ftlb",
+    "rpm",
+    "rop_ft_hr",
+    "anhydrite_pct",
+    "calcite_pct",
+    "chlorite_pct",
+    "epidote_pct",
+    "hematite_pct",
+    "quartz_pct",
+    "h2s_shakers_ppm",
+    "h2s_rig_floor_ppm",
+    "h2s_pits_ppm",
+    "rop_ft_hr_outlier",
+    "weight_on_bit_klb_outlier",
+    "torque_ftlb_outlier",
+    "rpm_outlier",
+    "is_outlier_any"
+  ],
+  "missing_values_final": 0,
+  "output_file": "../data/processed/well_data_cleaned.csv"
+}

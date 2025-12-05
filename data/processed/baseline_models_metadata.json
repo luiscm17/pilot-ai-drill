@@ -1,0 +1,153 @@
+{
+  "timestamp": "2025-12-05T00:41:55.497806",
+  "notebook": "05_baseline_models.ipynb",
+  "phase": "2 - Modeling",
+  "input_data": {
+    "train": "../data/processed/train_data_fixed.csv",
+    "validation": "../data/processed/val_data_fixed.csv",
+    "test": "../data/processed/test_data_fixed.csv",
+    "train_samples": 7599,
+    "val_samples": 1629,
+    "test_samples": 1629,
+    "n_features": 24
+  },
+  "features": {
+    "modeling_features": [
+      "depth_ft",
+      "weight_on_bit_klb",
+      "torque_ftlb",
+      "rpm",
+      "anhydrite_pct",
+      "calcite_pct",
+      "chlorite_pct",
+      "epidote_pct",
+      "hematite_pct",
+      "quartz_pct",
+      "h2s_shakers_ppm",
+      "h2s_rig_floor_ppm",
+      "h2s_pits_ppm",
+      "hardness_index",
+      "soft_to_hard_ratio",
+      "chlorite_likely_imputed",
+      "high_wob",
+      "high_rpm",
+      "high_torque",
+      "aggressive_drilling",
+      "mse_simplified",
+      "quartz_x_wob",
+      "rpm_x_torque",
+      "hardness_x_wob"
+    ],
+    "n_features": 24,
+    "scaling": {
+      "method": "RobustScaler",
+      "applied_to": "Linear models only"
+    }
+  },
+  "performance": {
+    "best_overall": {
+      "model": "Random Forest (Val)",
+      "r2": 0.675524418744933,
+      "rmse": 103.4185251626234,
+      "mae": 38.48590358036504,
+      "mape": 29.5449486476017
+    },
+    "best_linear": {
+      "model": "Ridge (Val)",
+      "r2": 0.5290091565483417
+    },
+    "best_tree": {
+      "model": "Random Forest (Val)",
+      "r2": 0.675524418744933
+    }
+  },
+  "feature_importance": {
+    "source_model": "Random Forest (Val)",
+    "top_5": [
+      {
+        "feature": "depth_ft",
+        "importance": 0.4440250547666348
+      },
+      {
+        "feature": "torque_ftlb",
+        "importance": 0.1934866738094608
+      },
+      {
+        "feature": "rpm_x_torque",
+        "importance": 0.12967455173066544
+      },
+      {
+        "feature": "rpm",
+        "importance": 0.05314485765119287
+      },
+      {
+        "feature": "mse_simplified",
+        "importance": 0.04759398259097471
+      }
+    ],
+    "weak_features": [
+      {
+        "feature": "soft_to_hard_ratio",
+        "importance": 0.004635280599463063
+      },
+      {
+        "feature": "hardness_index",
+        "importance": 0.00346126223189323
+      },
+      {
+        "feature": "h2s_pits_ppm",
+        "importance": 0.0025289454777220307
+      },
+      {
+        "feature": "quartz_pct",
+        "importance": 0.002363413435261272
+      },
+      {
+        "feature": "chlorite_likely_imputed",
+        "importance": 0.002324999484433198
+      },
+      {
+        "feature": "epidote_pct",
+        "importance": 0.00141603364459179
+      },
+      {
+        "feature": "h2s_rig_floor_ppm",
+        "importance": 0.000793241222224203
+      },
+      {
+        "feature": "high_rpm",
+        "importance": 0.0007205157615489661
+      },
+      {
+        "feature": "chlorite_pct",
+        "importance": 0.00041041639529924303
+      },
+      {
+        "feature": "hematite_pct",
+        "importance": 0.0002526726939903228
+      },
+      {
+        "feature": "high_torque",
+        "importance": 0.00024395031615968875
+      },
+      {
+        "feature": "high_wob",
+        "importance": 0.0002138938680195176
+      },
+      {
+        "feature": "anhydrite_pct",
+        "importance": 5.3123326585670934e-05
+      },
+      {
+        "feature": "aggressive_drilling",
+        "importance": 7.468028248295822e-06
+      }
+    ]
+  },
+  "output_files": {
+    "models_directory": "../models",
+    "model_comparison": "../data/processed/model_comparison.csv",
+    "feature_importance": "../data/processed/feature_importance.csv",
+    "train_metrics": "../data/processed/train_metrics.csv"
+  }
+}

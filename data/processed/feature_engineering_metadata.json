@@ -1,0 +1,193 @@
+{
+  "timestamp": "2025-12-05T00:00:30.367624",
+  "input_file": "../data/processed/well_data_cleaned.csv",
+  "original_shape": [
+    10857,
+    19
+  ],
+  "original_features": [
+    "depth_ft",
+    "weight_on_bit_klb",
+    "torque_ftlb",
+    "rpm",
+    "rop_ft_hr",
+    "anhydrite_pct",
+    "calcite_pct",
+    "chlorite_pct",
+    "epidote_pct",
+    "hematite_pct",
+    "quartz_pct",
+    "h2s_shakers_ppm",
+    "h2s_rig_floor_ppm",
+    "h2s_pits_ppm",
+    "rop_ft_hr_outlier",
+    "weight_on_bit_klb_outlier",
+    "torque_ftlb_outlier",
+    "rpm_outlier",
+    "is_outlier_any"
+  ],
+  "actions": [],
+  "features_created": [
+    {
+      "feature": "hardness_index",
+      "type": "geological",
+      "method": "weighted_sum_by_mohs_scale",
+      "correlation_with_rop": -0.44212745430564304,
+      "rationale": "Reduces dependency on chlorite alone, combines all minerals"
+    },
+    {
+      "feature": "soft_to_hard_ratio",
+      "type": "geological",
+      "method": "ratio_soft_minerals_to_hard_minerals",
+      "correlation_with_rop": 0.04072317173096164,
+      "rationale": "Captures mineral balance, expected positive correlation with ROP"
+    },
+    {
+      "feature": "chlorite_likely_imputed",
+      "type": "metadata",
+      "method": "flag_values_near_median",
+      "pct_flagged": 80.42737404439532,
+      "rationale": "Document high imputation rate (87%), allow model to learn different patterns"
+    },
+    {
+      "feature": "rop_per_wob",
+      "type": "operational_efficiency",
+      "method": "ratio",
+      "rationale": "Captures drilling efficiency"
+    },
+    {
+      "feature": "rop_per_rpm",
+      "type": "operational_efficiency",
+      "method": "ratio",
+      "rationale": "Captures drilling efficiency"
+    },
+    {
+      "feature": "rop_per_torque",
+      "type": "operational_efficiency",
+      "method": "ratio",
+      "rationale": "Captures drilling efficiency"
+    },
+    {
+      "feature": "high_wob",
+      "type": "operational_regime",
+      "method": "threshold_flag",
+      "rationale": "Captures different drilling modes"
+    },
+    {
+      "feature": "high_rpm",
+      "type": "operational_regime",
+      "method": "threshold_flag",
+      "rationale": "Captures different drilling modes"
+    },
+    {
+      "feature": "high_torque",
+      "type": "operational_regime",
+      "method": "threshold_flag",
+      "rationale": "Captures different drilling modes"
+    },
+    {
+      "feature": "aggressive_drilling",
+      "type": "operational_regime",
+      "method": "threshold_flag",
+      "rationale": "Captures different drilling modes"
+    },
+    {
+      "feature": "mse_simplified",
+      "type": "operational_energy",
+      "method": "simplified_mse_formula",
+      "correlation_with_rop": -0.30332088663640777,
+      "rationale": "Energy required to drill, indicates formation hardness"
+    },
+    {
+      "feature": "quartz_x_wob",
+      "type": "interaction",
+      "correlation_with_rop": -0.38747843094876117
+    },
+    {
+      "feature": "rpm_x_torque",
+      "type": "interaction",
+      "correlation_with_rop": 0.23928106620754624
+    },
+    {
+      "feature": "hardness_x_wob",
+      "type": "interaction",
+      "correlation_with_rop": -0.4070495386781138
+    },
+    {
+      "feature": "depth_bin",
+      "type": "categorical",
+      "method": "binning",
+      "bin_size": "500 ft",
+      "n_bins": 22,
+      "rationale": "Captures depth-related patterns"
+    }
+  ],
+  "features_removed": [],
+  "transformations_applied": [
+    {
+      "feature": "rop_ft_hr",
+      "transformation": "log1p",
+      "new_feature": "rop_log",
+      "skewness_before": 2.753104262421945,
+      "skewness_after": -1.2106728501954938
+    }
+  ],
+  "train_test_split": {
+    "method": "train_test_split",
+    "random_state": 42,
+    "train_size": 7599,
+    "val_size": 1629,
+    "test_size": 1629,
+    "train_pct": 69.99171041724233,
+    "val_pct": 15.004144791378835,
+    "test_pct": 15.004144791378835
+  },
+  "final_shape": [
+    10857,
+    35
+  ],
+  "final_features": [
+    "depth_ft",
+    "weight_on_bit_klb",
+    "torque_ftlb",
+    "rpm",
+    "rop_ft_hr",
+    "anhydrite_pct",
+    "calcite_pct",
+    "chlorite_pct",
+    "epidote_pct",
+    "hematite_pct",
+    "quartz_pct",
+    "h2s_shakers_ppm",
+    "h2s_rig_floor_ppm",
+    "h2s_pits_ppm",
+    "rop_ft_hr_outlier",
+    "weight_on_bit_klb_outlier",
+    "torque_ftlb_outlier",
+    "rpm_outlier",
+    "is_outlier_any",
+    "hardness_index",
+    "soft_to_hard_ratio",
+    "chlorite_likely_imputed",
+    "rop_per_wob",
+    "rop_per_rpm",
+    "rop_per_torque",
+    "high_wob",
+    "high_rpm",
+    "high_torque",
+    "aggressive_drilling",
+    "mse_simplified",
+    "quartz_x_wob",
+    "rpm_x_torque",
+    "hardness_x_wob",
+    "rop_log",
+    "depth_bin"
+  ],
+  "n_features_created": 15,
+  "output_files": {
+    "full_dataset": "../data/processed/well_data_features.csv",
+    "train": "../data/processed/train_data.csv",
+    "validation": "../data/processed/val_data.csv",
+    "test": "../data/processed/test_data.csv"
+  }
+}

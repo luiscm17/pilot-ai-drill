@@ -1,0 +1,122 @@
+{
+  "timestamp": "2025-12-05T00:16:39.300340",
+  "input_file": "../data/processed/well_data_features.csv",
+  "original_shape": [
+    10857,
+    35
+  ],
+  "fixed_shape": [
+    10857,
+    33
+  ],
+  "fixes_applied": [
+    {
+      "issue": "multicollinearity",
+      "features_removed": [
+        "rop_per_wob",
+        "rop_per_rpm",
+        "rop_per_torque"
+      ],
+      "features_kept": [
+        "mse_simplified"
+      ],
+      "vif_before_max": Infinity,
+      "vif_after_max": Infinity,
+      "resolution": "Removed efficiency ratios, kept MSE"
+    },
+    {
+      "issue": "target_transformation",
+      "original_skewness": 2.752723879729622,
+      "log_skewness": -1.2105055775627185,
+      "sqrt_skewness": 0.9361634198551618,
+      "boxcox_skewness": 0.0932760562502668,
+      "boxcox_lambda": 0.28129049322521776,
+      "yeojohnson_skewness": 0.06545493949993374,
+      "yeojohnson_lambda": 0.2507262652927575,
+      "selected_method": "yeojohnson",
+      "selected_params": {
+        "lambda": 0.2507262652927575
+      },
+      "final_skewness": 0.06546398433232546,
+      "resolution": "Applied yeojohnson transformation"
+    }
+  ],
+  "final_features": [
+    "depth_ft",
+    "weight_on_bit_klb",
+    "torque_ftlb",
+    "rpm",
+    "rop_ft_hr",
+    "anhydrite_pct",
+    "calcite_pct",
+    "chlorite_pct",
+    "epidote_pct",
+    "hematite_pct",
+    "quartz_pct",
+    "h2s_shakers_ppm",
+    "h2s_rig_floor_ppm",
+    "h2s_pits_ppm",
+    "rop_ft_hr_outlier",
+    "weight_on_bit_klb_outlier",
+    "torque_ftlb_outlier",
+    "rpm_outlier",
+    "is_outlier_any",
+    "hardness_index",
+    "soft_to_hard_ratio",
+    "chlorite_likely_imputed",
+    "high_wob",
+    "high_rpm",
+    "high_torque",
+    "aggressive_drilling",
+    "mse_simplified",
+    "quartz_x_wob",
+    "rpm_x_torque",
+    "hardness_x_wob",
+    "rop_log",
+    "depth_bin",
+    "rop_transformed"
+  ],
+  "modeling_features": [
+    "depth_ft",
+    "weight_on_bit_klb",
+    "torque_ftlb",
+    "rpm",
+    "anhydrite_pct",
+    "calcite_pct",
+    "chlorite_pct",
+    "epidote_pct",
+    "hematite_pct",
+    "quartz_pct",
+    "h2s_shakers_ppm",
+    "h2s_rig_floor_ppm",
+    "h2s_pits_ppm",
+    "hardness_index",
+    "soft_to_hard_ratio",
+    "chlorite_likely_imputed",
+    "high_wob",
+    "high_rpm",
+    "high_torque",
+    "aggressive_drilling",
+    "mse_simplified",
+    "quartz_x_wob",
+    "rpm_x_torque",
+    "hardness_x_wob"
+  ],
+  "n_modeling_features": 24,
+  "train_test_split": {
+    "method": "train_test_split",
+    "random_state": 42,
+    "train_size": 7599,
+    "val_size": 1629,
+    "test_size": 1629,
+    "train_pct": 69.99171041724233,
+    "val_pct": 15.004144791378835,
+    "test_pct": 15.004144791378835
+  },
+  "output_files": {
+    "full_dataset": "../data/processed/well_data_features_fixed.csv",
+    "train": "../data/processed/train_data_fixed.csv",
+    "validation": "../data/processed/val_data_fixed.csv",
+    "test": "../data/processed/test_data_fixed.csv"
+  }
+}
